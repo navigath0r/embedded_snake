@@ -16,15 +16,19 @@ int main()
 	int column = 2;
 	int row = 3;
 
-	lm.LedMatrixArray[column][row][0]=255;
+	lm.LedMatrixArray[row][column][0]=255;
 	lm.ledMatrixOut32();
+
+	int dir;
 
 
 	while(true)
 	{
+		adc.getPotDirection(dir);
+		if (adc.readADC(22) == 0) dir = 4;
 
 
-		switch (adc.getPotDirection())
+		switch (dir)
 			{
 				case 0:
 						lm.LedMatrixArray[row][column][0] = 0;

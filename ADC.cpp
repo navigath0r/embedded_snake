@@ -45,10 +45,8 @@ void ADC::printADCReading(u8 Channel)
 	}
 }
 
-int ADC::getPotDirection()
+int ADC::getPotDirection(int& direction)
 {
-	int direction = 4;
-
 	u16 x_axis = readADC(XAXIS);
 	u16 y_axis = readADC(YAXIS);
 

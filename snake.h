@@ -4,6 +4,7 @@
 #include "playground.h"
 #include "food.h"
 
+class playground;
 class snake
 {
 public:
@@ -25,11 +26,12 @@ public:
 	snake();
 	virtual ~snake();
 
-	void moveSnake(const int& dir, const int& extend_flag);
-	int increaseCol(const snake_element *current);
-	int decreaseCol(const snake_element *current);
-	int increaseRow(const snake_element *current);
-	int decreaseRow(const snake_element *current);
-	int collisonDetect(const int& dir, food& feed, playground& pg);
+	void moveSnake(const int& dir);
+	int increaseCol();
+	int decreaseCol();
+	int increaseRow();
+	int decreaseRow();
+	void next_coord(const int& dir, int& next_row, int& next_col);
+	int collisonDetect(const int& dir, playground& pg, int& next_row, int& next_col);
 };
 #endif /* SRC_SNAKE_H_ */

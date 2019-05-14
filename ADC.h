@@ -81,7 +81,7 @@ class ADC
 		******************************************************************************/
 		void printADCReading(u8 Channel);
 
-		int getPotDirection();
+		int getPotDirection(int& direction);
 
 	//Private variables
 	private:

@@ -16,52 +16,19 @@ snake::snake()
 
 snake::~snake(){}
 
-void snake::moveSnake(const int& dir, const int& extend_flag) //default direction: right
+void snake::moveSnake(const int& dir) //default direction: right
 {
 
 	snake_element *new_head = new snake_element;
+	int next_row;
+	int next_col;
 
-	switch (dir)
-	{
-		case 0:	//left
-		{
-			if (head->next_element->row_pos != head->row_pos)
-			{				
-				new_head->column_pos = decreaseCol(head);
-				new_head->row_pos = head->row_pos;				
-			}
-		break;
-		}
+	next_coord(dir, next_row, next_col);
 
-		case 2:	//right
-		{
-			if (head->next_element->row_pos != head->row_pos)
-			{				
-				new_head->column_pos = increaseCol(head);
-				new_head->row_pos = head->row_pos;				
-			}
-		break;
-		}
+	new_head->row_pos = next_row;
+	new_head->column_pos = next_col;
 
-		case 1:	//up
-		{
-			if (head->next_element->column_pos != head->column_pos)
-			{				
-				new_head->column_pos = head->column_pos;
-				new_head->row_pos = increaseRow(head);				
-			}
-		break;
-		}
-
-		case 3:	//down
-		{
-			if (head->next_element->column_pos != head->column_pos)
-			{
-				new_head->column_pos = head->column_pos;
-				new_head->row_pos = decreaseRow(head);
-			}
-		break;
-		}
+	
 
 	new_head->next_element = head;
 	head = new_head;
@@ -86,87 +53,122 @@ void snake::moveSnake(const int& dir, const int& extend_flag) //default directio
 
 
 
-	}
 }
 
 
-int snake::increaseCol(const snake_element *current)
+
+int snake::increaseCol()
 {
 	int col;
 
-	if (current->column_pos < 7)
+	if (head->column_pos < 7)
 	{
-		col = current->column_pos + 1;
+		col = head->column_pos + 1;
 	}
 	else col = 0;
 
 	return col;
 }
-int snake::decreaseCol(const snake_element *current)
+int snake::decreaseCol()
 {
 	int col;
 
-	if (current->column_pos > 0)
+	if (head->column_pos > 0)
 		{
-			col = current->column_pos - 1;
+			col = head->column_pos - 1;
 		}
 		else col = 7;
 
 	return col;
 }
-int snake::increaseRow(const snake_element *current)
+int snake::increaseRow()
 {
 	int row;
 
-	if (current->row_pos < 7)
+	if (head->row_pos < 7)
 		{
-			row = current->row_pos + 1;
+			row = head->row_pos + 1;
 		}
 		else row = 0;
 
 	return row;
 }
 
-int snake::decreaseRow(const snake_element *current)
+int snake::decreaseRow()
 {
 	int row;
 
-	if (current->row_pos > 0)
+	if (head->row_pos > 0)
 			{
-				row = current->row_pos - 1;
+				row = head->row_pos - 1;
 			}
 			else row = 7;
 
 	return row;
 }
-int snake::collisonDetect(const int& dir, food& feed, playground& pg)
+int snake::collisonDetect(const int& dir, playground& pg, int& next_row, int& next_col)
 {
 	int** playground = pg.getPlayground();
-
-	switch (dir)
-	{
-		case 0:	//left
-		{
-			switch (playground[head->row][decreaseCol(head)])
+	
+			switch (playground[next_row][next_col])
 			{
 				case 1:	//hit snake body, die
 				{
 					return 1;
 				}
+
 				case 3: //hit regular food
 				{
 					extend_flag = 1;
-				return 3;
+					return 3;
 				}
+
 				case 4: //hit superfood
 				{
 					extend_flag = 1;
-				return 4;
+					return 4;
 				}
 
+				default:
+				{
+					return 0;
+					break;
+				}
 			}
+}		
+
+void snake::next_coord(const int& dir, int& next_row, int& next_col)
+{
+	switch (dir)
+	{
+		case 0:
+		{
+			next_row = head->row_pos;
+			next_col = decreaseCol();
+			break;
 		}
+
+		case 2:
+		{
+			next_row = head->row_pos;
+			next_col = increaseCol();
+			break;
+		}
+
+		case 1:
+		{
+			next_row = increaseRow();
+			next_col = head->column_pos;
+			break;
+		}
+
+		case 3:
+		{
+			next_row = decreaseRow();
+			next_col = head->column_pos;
+			break;
+		}
+		default:
+			break;
 	}
-
 }
-
