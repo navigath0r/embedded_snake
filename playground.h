@@ -7,13 +7,13 @@
 class playground
 {
 public:
-	int playground[8][8];
+	int playg[8][8];
 
 	playground();
 	~playground();
 
-	int getPlayground();
-	void setPlayground(const snake_element& head, const food_elem& feed);
+	int** getPlayground();
+	void setPlayground(const struct snake_element& head, const struct food_elem& feed);
 	void outputFrameBuffer();
 
 	

@@ -13,7 +13,7 @@ int main()
 	ADC adc;
 	led_matrix lm;
 
-	int column = 3;
+	int column = 2;
 	int row = 3;
 
 	lm.LedMatrixArray[column][row][0]=255;

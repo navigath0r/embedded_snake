@@ -26,7 +26,7 @@ public:
 	int getFoodsToSuperfood();
 
 	int timerGen();
-	void generateFood(),
+	void generateFood();
 	void generateSuperFood();
 
 

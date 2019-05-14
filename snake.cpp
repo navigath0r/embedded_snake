@@ -9,114 +9,88 @@ snake::snake()
 	head->row_pos = 3;
 
 	tail = head;
+	tail->tail_flag = 1;
 
 	temp = new snake_element;
 }
 
 snake::~snake(){}
 
-void snake::moveSnake(const int* dir, const int* extend_flag) //default direction: right
+void snake::moveSnake(const int& dir, const int& extend_flag) //default direction: right
 {
+
+	snake_element *new_head = new snake_element;
+
 	switch (dir)
 	{
 		case 0:	//left
+		{
 			if (head->next_element->row_pos != head->row_pos)
-			{
-				snake_element *new_head = new snake_element;
+			{				
 				new_head->column_pos = decreaseCol(head);
-				new_head->row_pos = head->row_pos;
-				new_head->next_element = head;
-				head = new_head;
-
-				if(extend_flag == 0)
-				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
-				}
+				new_head->row_pos = head->row_pos;				
 			}
 		break;
+		}
 
 		case 2:	//right
+		{
 			if (head->next_element->row_pos != head->row_pos)
-			{
-				snake_element *new_head = new snake_element;
+			{				
 				new_head->column_pos = increaseCol(head);
-				new_head->row_pos = head->row_pos;
-				new_head->next_element = head;
-				head = new_head;
-
-				if(extend_flag == 0)
-				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
-				}
+				new_head->row_pos = head->row_pos;				
 			}
 		break;
+		}
 
 		case 1:	//up
+		{
 			if (head->next_element->column_pos != head->column_pos)
-			{
-				snake_element *new_head = new snake_element;
+			{				
 				new_head->column_pos = head->column_pos;
-				new_head->row_pos = increaseRow(head);
-				new_head->next_element = head;
-				head = new_head;
-
-				if(extend_flag == 0)
-				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
-				}
+				new_head->row_pos = increaseRow(head);				
 			}
 		break;
+		}
 
 		case 3:	//down
+		{
 			if (head->next_element->column_pos != head->column_pos)
 			{
-				snake_element *new_head = new snake_element;
 				new_head->column_pos = head->column_pos;
 				new_head->row_pos = decreaseRow(head);
-				new_head->next_element = head;
-				head = new_head;
-
-				if(extend_flag == 0)
-				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
-				}
 			}
 		break;
+		}
 
+	new_head->next_element = head;
+	head = new_head;
+
+	temp = head;
+
+	if(extend_flag == 0)
+	{
+
+		while(temp->next_element->next_element == 0)
+		{
+			temp = temp->next_element;
+		}
+
+		delete temp->next_element;
+		temp->tail_flag = 1;
+	}
+	else
+	{
+		extend_flag = 0;
 	}
 
+
+
+	}
 }
 
 
-int snake::increaseCol(snake_element *current)
+int snake::increaseCol(const snake_element *current)
 {
 	int col;
 
@@ -128,7 +102,7 @@ int snake::increaseCol(snake_element *current)
 
 	return col;
 }
-int snake::decreaseCol(snake_element *current)
+int snake::decreaseCol(const snake_element *current)
 {
 	int col;
 
@@ -136,9 +110,11 @@ int snake::decreaseCol(snake_element *current)
 		{
 			col = current->column_pos - 1;
 		}
-		else current->column_pos = 7;
+		else col = 7;
+
+	return col;
 }
-int snake::increaseRow(snake_element *current)
+int snake::increaseRow(const snake_element *current)
 {
 	int row;
 
@@ -146,9 +122,12 @@ int snake::increaseRow(snake_element *current)
 		{
 			row = current->row_pos + 1;
 		}
-		else current->row_pos = 0;
+		else row = 0;
+
+	return row;
 }
-int snake::decreaseRow(snake_element *current)
+
+int snake::decreaseRow(const snake_element *current)
 {
 	int row;
 
@@ -156,107 +135,38 @@ int snake::decreaseRow(snake_element *current)
 			{
 				row = current->row_pos - 1;
 			}
-			else current->row_pos = 7;
+			else row = 7;
+
+	return row;
 }
-int snake::collisonDetect(const int* dir, const foodcoord* food_coord)
+int snake::collisonDetect(const int& dir, food& feed, playground& pg)
 {
+	int** playground = pg.getPlayground();
+
 	switch (dir)
 	{
 		case 0:	//left
-			if (head->next_element->row_pos != head->row_pos)
+		{
+			switch (playground[head->row][decreaseCol(head)])
 			{
-				snake_element *new_head = new snake_element;
-				new_head->column_pos = decreaseCol(head);
-				new_head->row_pos = head->row_pos;
-				new_head->next_element = head;
-				head = new_head;
-				temp = head;
-
-				if(extend_flag == 0)
+				case 1:	//hit snake body, die
 				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
+					return 1;
 				}
-			}
-		break;
-
-		case 2:	//right
-			if (head->next_element->row_pos != head->row_pos)
-			{
-				snake_element *new_head = new snake_element;
-				new_head->column_pos = increaseCol(head);
-				new_head->row_pos = head->row_pos;
-				new_head->next_element = head;
-				head = new_head;
-				temp = head;
-
-				if(extend_flag == 0)
+				case 3: //hit regular food
 				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
+					extend_flag = 1;
+				return 3;
 				}
-			}
-		break;
-
-		case 1:	//up
-			if (head->next_element->column_pos != head->column_pos)
-			{
-				snake_element *new_head = new snake_element;
-				new_head->column_pos = head->column_pos;
-				new_head->row_pos = increaseRow(head);
-				new_head->next_element = head;
-				head = new_head;
-				temp = head;
-
-				if(extend_flag == 0)
+				case 4: //hit superfood
 				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
+					extend_flag = 1;
+				return 4;
 				}
+
 			}
-		break;
-
-		case 3:	//down
-			if (head->next_element->column_pos != head->column_pos)
-			{
-				snake_element *new_head = new snake_element;
-				new_head->column_pos = head->column_pos;
-				new_head->row_pos = decreaseRow(head);
-				new_head->next_element = head;
-				head = new_head;
-				temp = head;
-
-				if(extend_flag == 0)
-				{
-
-					while(temp->next_element->next_element == 0)
-					{
-						temp = temp->next_element;
-					}
-
-					delete temp->next_element;
-					tail = temp;
-				}
-			}
-		break;
-
+		}
 	}
+
 }
+

@@ -11,8 +11,9 @@ public:
 	typedef struct snake_element
 	{
 		struct snake_element* next_element;
-		int column_pos;
 		int row_pos;
+		int column_pos;
+		int tail_flag;
 	} snake_element;
 
 	snake_element *head;
@@ -25,10 +26,10 @@ public:
 	virtual ~snake();
 
 	void moveSnake(const int& dir, const int& extend_flag);
-	int increaseCol(snake_element &current);
-	int decreaseCol(snake_element &current);
-	int increaseRow(snake_element &current);
-	int decreaseRow(snake_element &current);
-	int collisonDetect();
+	int increaseCol(const snake_element *current);
+	int decreaseCol(const snake_element *current);
+	int increaseRow(const snake_element *current);
+	int decreaseRow(const snake_element *current);
+	int collisonDetect(const int& dir, food& feed, playground& pg);
 };
 #endif /* SRC_SNAKE_H_ */
