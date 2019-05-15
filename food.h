@@ -4,30 +4,29 @@
 #include "snake.h"
 #include "playground.h"
 
+class playground;
 class food
 {
-	typedef struct food_elem
+	typedef struct
 	{
-		int column;
 		int row;
+		int column;
 		int superfood;
 	} food_elem;
 
 public:
 
+	food_elem kaja;
 	int TTL_superfood;
 	int foods_to_superfood;
 
-	food();
+	food(playground& pg);
 	virtual ~food();
 
 	food_elem getFoodCoord();
 	int getTTLSuperfood();
 	int getFoodsToSuperfood();
-
-	int timerGen();
-	void generateFood();
-	void generateSuperFood();
+	int generateFood(playground& pg);
 
 
 

@@ -16,7 +16,7 @@ snake::snake()
 
 snake::~snake(){}
 
-void snake::moveSnake(const int& dir) //default direction: right
+void snake::moveSnake(const int& dir, playground& pg, food& fd, int& points) //default direction: right
 {
 
 	snake_element *new_head = new snake_element;
@@ -25,10 +25,32 @@ void snake::moveSnake(const int& dir) //default direction: right
 
 	next_coord(dir, next_row, next_col);
 
+	switch (collisonDetect(pg, next_row, next_col, points))
+	{
+		case 1:
+		{
+			pg.die();
+			break;
+		}
+
+		case 3:
+		{
+			fd.generateFood(pg);
+			break;
+		}
+
+		case 4:
+		{
+			fd.generateFood(pg);
+			break;
+		}
+
+		default:
+		break;
+	} 
+
 	new_head->row_pos = next_row;
 	new_head->column_pos = next_col;
-
-	
 
 	new_head->next_element = head;
 	head = new_head;
@@ -51,11 +73,7 @@ void snake::moveSnake(const int& dir) //default direction: right
 		extend_flag = 0;
 	}
 
-
-
 }
-
-
 
 int snake::increaseCol()
 {
@@ -106,11 +124,11 @@ int snake::decreaseRow()
 
 	return row;
 }
-int snake::collisonDetect(const int& dir, playground& pg, int& next_row, int& next_col)
+
+int snake::collisonDetect(playground& pg, int& next_row, int& next_col, int& points)
 {
-	int** playground = pg.getPlayground();
 	
-			switch (playground[next_row][next_col])
+			switch (pg[next_row][next_col])
 			{
 				case 1:	//hit snake body, die
 				{
@@ -120,12 +138,14 @@ int snake::collisonDetect(const int& dir, playground& pg, int& next_row, int& ne
 				case 3: //hit regular food
 				{
 					extend_flag = 1;
+					points++;
 					return 3;
 				}
 
 				case 4: //hit superfood
 				{
 					extend_flag = 1;
+					points += 3;
 					return 4;
 				}
 

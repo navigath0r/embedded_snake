@@ -4,6 +4,9 @@
 #include "snake.h"
 #include "food.h"
 
+class snake;
+struct food_elem;
+
 class playground
 {
 public:
@@ -12,9 +15,10 @@ public:
 	playground();
 	~playground();
 
-	int** getPlayground();
-	void setPlayground(const struct snake_element& head, const struct food_elem& feed);
+	int* operator[](int x);
+	void setPlayground(snake& sn, food_elem& feed);
 	void outputFrameBuffer();
+	void die();
 
 	
 };
