@@ -10,9 +10,9 @@ class snake
 {
 public:
 
-	typedef struct
+	typedef struct snake_element
 	{
-		struct snake_element* next_element;
+		typedef snake_element* next_element;
 		int row_pos;
 		int column_pos;
 		int tail_flag;

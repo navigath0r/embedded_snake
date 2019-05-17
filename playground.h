@@ -3,9 +3,10 @@
 
 #include "snake.h"
 #include "food.h"
+#include "led_matrix.h"
 
 class snake;
-struct food_elem;
+class food;
 
 class playground
 {
@@ -16,8 +17,8 @@ public:
 	~playground();
 
 	int* operator[](int x);
-	void setPlayground(snake& sn, food_elem& feed);
-	void outputFrameBuffer();
+	void setPlayground(snake& sn, food& feed);
+	void outputFrameBuffer(led_matrix& lm);
 	void die();
 
 	

@@ -7,7 +7,7 @@
 class playground;
 class food
 {
-	typedef struct
+	typedef struct food_elem
 	{
 		int row;
 		int column;
@@ -24,8 +24,11 @@ public:
 	virtual ~food();
 
 	food_elem getFoodCoord();
+	int getFoodRow();
+	int getFoodColumn();
 	int getTTLSuperfood();
 	int getFoodsToSuperfood();
+	int getSuperFood();
 	int generateFood(playground& pg);
 
 

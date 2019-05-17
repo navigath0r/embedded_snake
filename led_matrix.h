@@ -17,13 +17,6 @@ class led_matrix
 		void ledMatrixOut32();
 		uint8_t LedMatrixArray[8][8][3] = {};
 
-	private: // Private variable definitions********************************************
-		XBram Bram;	/* The Instance of the BRAM Driver */
-		uint16_t BramDeviceId = XPAR_BRAM_0_DEVICE_ID;
-		XBram_Config *ConfigPtr_;
-
-	private: // Private function definitions********************************************
-
 		/*****************************************************************************/
 		/**
 		* Writes the value of 1 LED by the function XBram_Out32
@@ -32,6 +25,15 @@ class led_matrix
 		* @note		None.
 		******************************************************************************/
 		void single_led(uint8_t row_pos,uint8_t column_pos,uint8_t redvalue,uint8_t greenvalue,uint8_t bluevalue);
+
+	private: // Private variable definitions********************************************
+		XBram Bram;	/* The Instance of the BRAM Driver */
+		uint16_t BramDeviceId = XPAR_BRAM_0_DEVICE_ID;
+		XBram_Config *ConfigPtr_;
+
+	private: // Private function definitions********************************************
+
+
 
 		/*****************************************************************************/
 		/**

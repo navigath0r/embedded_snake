@@ -14,7 +14,11 @@ snake::snake()
 	temp = new snake_element;
 }
 
-snake::~snake(){}
+snake::~snake()
+{
+	delete head;
+	delete temp;
+}
 
 void snake::moveSnake(const int& dir, playground& pg, food& fd, int& points) //default direction: right
 {

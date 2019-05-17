@@ -1,4 +1,7 @@
 #include "playground.h"
+#include "led_matrix.h"
+#include "numbers.h"
+#include <cmath>
 
 playground::playground(){}
 
@@ -11,7 +14,7 @@ int* playground::operator[](int x){
     return playg[x];
 }
 
-void playground::setPlayground(snake& sn, food_elem& feed)
+void playground::setPlayground(snake& sn, food& feed)
 {
 	for (int row = 0; row < 8; row++)
 	{
@@ -37,12 +40,67 @@ void playground::setPlayground(snake& sn, food_elem& feed)
 		sn.temp = sn.temp->next_element;
 	}
 
-	if (feed.superfood == 1)
+	if (feed.getSuperFood() == 1)
 	{
-		playg[feed.row][feed.column] = 4;
+		playg[feed.getFoodRow()][feed.getFoodColumn()] = 4;
 	}
 	else
 	{
-		playg[feed.row][feed.column] = 3;
+		playg[feed.getFoodRow()][feed.getFoodColumn()] = 3;
 	}
+}
+
+void playground::outputFrameBuffer(led_matrix& lm)
+{
+	for (int row = 0; row < 8; row++)
+	{
+		for (int col = 0; col < 8; col++)
+		{
+			switch (playg[row][col])
+			{
+				case 1:
+				{
+					lm.single_led(row,col,0,255,0);
+					break;
+				}
+
+				case 2:
+				{
+					lm.single_led(row,col,0,255,0);
+					break;
+				}
+
+				case 3:
+				{
+					lm.single_led(row,col,0,0,255);
+					break;
+				}
+
+				case 4:
+				{
+					lm.single_led(row,col,255,0,0);
+					break;
+				}
+
+				default:
+				break;
+			}
+		}
+	}
+}
+
+void displayScore(int score)
+{
+	int tens = floor(score / 10);
+	int ones = score % 10;
+
+	
+
+
+}
+
+void die(snake& sn, food& fd)
+{
+
+
 }

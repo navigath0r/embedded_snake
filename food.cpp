@@ -13,6 +13,16 @@ food::food_elem food::getFoodCoord()
 	return kaja;
 }
 
+int food::getFoodRow()
+{
+	return kaja.row;
+}
+
+int food::getFoodColumn()
+{
+	return kaja.column;
+}
+
 int food::getTTLSuperfood()
 {
 	return TTL_superfood;
@@ -21,6 +31,11 @@ int food::getTTLSuperfood()
 int food::getFoodsToSuperfood()
 {
 	return foods_to_superfood;
+}
+
+int food::getSuperFood()
+{
+	return kaja.superfood;
 }
 
 
@@ -42,5 +57,4 @@ int food::generateFood(playground& pg)
 	}
 
 	return kaja.superfood;
-
 }
