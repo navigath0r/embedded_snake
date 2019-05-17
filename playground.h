@@ -3,7 +3,9 @@
 
 #include "snake.h"
 #include "food.h"
+#include "playground.h"
 #include "led_matrix.h"
+#include "ADC.h"
 
 class snake;
 class food;
@@ -19,9 +21,11 @@ public:
 	int* operator[](int x);
 	void setPlayground(snake& sn, food& feed);
 	void outputFrameBuffer(led_matrix& lm);
-	void die();
+	void drawTens(int number[8][4]);
+	void drawOnes(int number[8][4]);
+	void displayScore(int& score, led_matrix& lm);
+	void die(snake& sn, food& fd, led_matrix& lm, ADC& adc, int& score);
 
-	
 };
 
 

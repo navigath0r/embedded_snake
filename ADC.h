@@ -83,6 +83,8 @@ class ADC
 
 		int getPotDirection(int& direction);
 
+		int getButton();
+
 	//Private variables
 	private:
 		uint16_t XADC_DEVICE_ID_ = XPAR_XADCPS_0_DEVICE_ID;

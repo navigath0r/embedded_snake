@@ -1,11 +1,6 @@
 #include "playground.h"
-#include "led_matrix.h"
 #include "numbers.h"
 #include <cmath>
-
-playground::playground(){}
-
-playground::~playground(){}
 
 int* playground::operator[](int x){
     if(x > 7 || x < 0)
@@ -80,6 +75,12 @@ void playground::outputFrameBuffer(led_matrix& lm)
 				{
 					lm.single_led(row,col,255,0,0);
 					break;
+
+				}
+				case 5:
+				{
+					lm.single_led(row,col,255,255,255);
+					break;
 				}
 
 				default:
@@ -89,18 +90,177 @@ void playground::outputFrameBuffer(led_matrix& lm)
 	}
 }
 
-void displayScore(int score)
+void playground::drawTens(int number[8][4])
+{
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 4; col++)
+		{
+			playg[row][col] = number[row][col];
+		}
+	}
+}
+
+
+void playground::drawOnes(int number[8][4])
+{
+	for (int row = 0; row < 4; row++)
+	{
+		for (int col = 0; col < 4; col++)
+		{
+			playg[row][col + 4] = number[row][col];
+		}
+	}
+}
+
+void playground::displayScore(int& score, led_matrix& lm)
 {
 	int tens = floor(score / 10);
 	int ones = score % 10;
 
-	
+	switch (tens)
+	{
+		case 9:
+		{
+			drawTens(NumNine);
+			break;		
+		}
 
+		case 8:
+		{
+			drawTens(NumEight);
+			break;		
+		}
 
+		case 7:
+		{
+			drawTens(NumSeven);
+			break;		
+		}
+
+		case 6:
+		{
+			drawTens(NumSix);
+			break;		
+		}
+
+		case 5:
+		{
+			drawTens(NumFive);
+			break;		
+		}
+
+		case 4:
+		{
+			drawTens(NumFour);
+			break;		
+		}
+
+		case 3:
+		{
+			drawTens(NumThree);
+			break;		
+		}
+
+		case 2:
+		{
+			drawTens(NumTwo);
+			break;		
+		}
+
+		case 1:
+		{
+			drawTens(NumOne);
+			break;		
+		}
+
+		case 0:
+		{
+			drawTens(NumZero);
+			break;		
+		}
+
+		default:
+		break;
+	}
+
+	switch (ones)
+	{
+		case 9:
+		{
+			drawOnes(NumNine);
+			break;		
+		}
+
+		case 8:
+		{
+			drawOnes(NumEight);
+			break;		
+		}
+
+		case 7:
+		{
+			drawOnes(NumSeven);
+			break;		
+		}
+
+		case 6:
+		{
+			drawOnes(NumSix);
+			break;		
+		}
+
+		case 5:
+		{
+			drawOnes(NumFive);
+			break;		
+		}
+
+		case 4:
+		{
+			drawOnes(NumFour);
+			break;		
+		}
+
+		case 3:
+		{
+			drawOnes(NumThree);
+			break;		
+		}
+
+		case 2:
+		{
+			drawOnes(NumTwo);
+			break;		
+		}
+
+		case 1:
+		{
+			drawOnes(NumOne);
+			break;		
+		}
+
+		case 0:
+		{
+			drawOnes(NumZero);
+			break;		
+		}
+
+		default:
+		break;
+	}
+
+	outputFrameBuffer(lm);
 }
 
-void die(snake& sn, food& fd)
+void playground::die(snake& sn, food& fd, led_matrix& lm, ADC& adc, int& score)
 {
+	displayScore(score,lm);
 
+	score = 0;
 
+	sn.~snake();
+	fd.~food();
+
+	if (adc.getButton() == 0){}
 }

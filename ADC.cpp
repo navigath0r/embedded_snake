@@ -65,6 +65,13 @@ int ADC::getPotDirection(int& direction)
 	return direction;
 }
 
+int ADC::getButton()
+{
+	u16 button = readADC(BUTTON);
+
+	return button;
+}
+
 //Private functions
 int ADC::initADC()
 {
