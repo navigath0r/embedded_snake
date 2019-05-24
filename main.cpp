@@ -12,57 +12,60 @@ int main()
 {
 	ADC adc;
 	led_matrix lm;
-
-	int column = 2;
-	int row = 3;
-
-	lm.LedMatrixArray[row][column][0]=255;
-	lm.ledMatrixOut32();
+	playground pg;
 
 	int dir;
+	int gamestate = 0;
+	int score = 0;
 
 
 	while(true)
 	{
 		adc.getPotDirection(dir);
-		if (adc.readADC(22) == 0) dir = 4;
 
-
-		switch (dir)
+		switch (gamestate)
+		{
+			case 1:
 			{
-				case 0:
-						lm.LedMatrixArray[row][column][0] = 0;
-						lm.ledMatrixOut32();
-						column--;
-						lm.LedMatrixArray[row][column][0] = 255;
-						lm.ledMatrixOut32();
-					break;
-				case 2:
-						lm.LedMatrixArray[row][column][0] = 0;
-						lm.ledMatrixOut32();
-						column++;
-						lm.LedMatrixArray[row][column][0] = 255;
-						lm.ledMatrixOut32();
-					break;
-				case 1:
-						lm.LedMatrixArray[row][column][0] = 0;
-						lm.ledMatrixOut32();
-						row++;
-						lm.LedMatrixArray[row][column][0] = 255;
-						lm.ledMatrixOut32();
-					break;
-				case 3:
-						lm.LedMatrixArray[row][column][0] = 0;
-						lm.ledMatrixOut32();
-						row--;
-						lm.LedMatrixArray[row][column][0] = 255;
-						lm.ledMatrixOut32();
-					break;
-				default:
-					break;
+				sn.moveSnake(dir,fd,lm,pg,score,gamestate);
+				pg.setPlayground(sn,fd);
+				pg.outputFrameBuffer(lm);
+
+				if (score == 99)
+				{
+					gamestate = 2;
+				}
+
+				if (fd.getSuperFood() == 1)
+				{
+					usleep(250000);
+				}
+				else
+				{
+					usleep(500000);
+				}
+				break;
 			}
 
-		usleep(250000);
+			case 2:
+			{
+				pg.die(sn,fd,lm,score);
+
+				if (adc.getButton() == 0)
+				{
+					gamestate = 3;
+				}
+				break;
+			}
+			case 3:
+			{
+				snake sn;
+				food fd(pg);
+
+				gamestate = 1;
+			}
+		}
+
 
 	}
 	return 0;

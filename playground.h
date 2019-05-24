@@ -3,7 +3,6 @@
 
 #include "snake.h"
 #include "food.h"
-#include "playground.h"
 #include "led_matrix.h"
 #include "ADC.h"
 
@@ -24,7 +23,7 @@ public:
 	void drawTens(int number[8][4]);
 	void drawOnes(int number[8][4]);
 	void displayScore(int& score, led_matrix& lm);
-	void die(snake& sn, food& fd, led_matrix& lm, ADC& adc, int& score);
+	void die(snake& sn, food& fd, led_matrix lm, int& score);
 
 };
 

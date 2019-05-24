@@ -20,7 +20,7 @@ snake::~snake()
 	delete temp;
 }
 
-void snake::moveSnake(const int& dir, playground& pg, food& fd, int& points) //default direction: right
+void snake::moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, int& points, int& gamestate) //default direction: right
 {
 
 	snake_element *new_head = new snake_element;
@@ -33,8 +33,8 @@ void snake::moveSnake(const int& dir, playground& pg, food& fd, int& points) //d
 	{
 		case 1:
 		{
-			pg.die();
-			break;
+			gamestate = 2;
+			return;
 		}
 
 		case 3:

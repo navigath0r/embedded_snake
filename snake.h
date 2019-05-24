@@ -3,20 +3,26 @@
 
 #include "playground.h"
 #include "food.h"
+#include "ADC.h"
+#include "led_matrix.h"
 
 class playground;
 class food;
-class snake
-{
-public:
 
-	typedef struct snake_element
+typedef struct snake_element
 	{
-		typedef snake_element* next_element;
+		struct snake_element* next_element;
 		int row_pos;
 		int column_pos;
 		int tail_flag;
 	} snake_element;
+
+
+class snake
+{
+public:
+
+	
 
 	snake_element *head;
 	snake_element *tail;
@@ -27,7 +33,7 @@ public:
 	snake();
 	virtual ~snake();
 
-	void moveSnake(const int& dir, playground& pg, food& fd, int& points);
+	void moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, int& points, int& gamestate);
 	int increaseCol();
 	int decreaseCol();
 	int increaseRow();

@@ -2,6 +2,11 @@
 #include "numbers.h"
 #include <cmath>
 
+playground::playground(){}
+
+playground::~playground(){}
+
+
 int* playground::operator[](int x){
     if(x > 7 || x < 0)
         return 0;
@@ -253,7 +258,7 @@ void playground::displayScore(int& score, led_matrix& lm)
 	outputFrameBuffer(lm);
 }
 
-void playground::die(snake& sn, food& fd, led_matrix& lm, ADC& adc, int& score)
+void playground::die(snake& sn, food& fd, led_matrix lm, int& score)
 {
 	displayScore(score,lm);
 
@@ -262,5 +267,4 @@ void playground::die(snake& sn, food& fd, led_matrix& lm, ADC& adc, int& score)
 	sn.~snake();
 	fd.~food();
 
-	if (adc.getButton() == 0){}
 }
