@@ -34,7 +34,7 @@ public:
 	snake();
 	virtual ~snake();
 
-	void moveSnake(const int& dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate);
+	void moveSnake(int& dir, const int& prev_dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate);
 	int increaseCol();
 	int decreaseCol();
 	int increaseRow();

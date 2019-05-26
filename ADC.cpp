@@ -50,17 +50,16 @@ int ADC::getPotDirection(int& direction)
 	u16 x_axis = readADC(XAXIS);
 	u16 y_axis = readADC(YAXIS);
 
-	printADCReading(XAXIS);
-	printADCReading(YAXIS);
-	printADCReading(POT);
-	printADCReading(BUTTON);
-
 	if (y_axis > 1400 && x_axis > 15000 && x_axis < 50000) direction = 0;	//left
 	if (y_axis < 250 && x_axis > 15000 && x_axis < 50000) direction = 2;	//right
 	if (x_axis < 15000 && y_axis > 250 && y_axis < 1400) direction = 1;		//up
 	if (x_axis > 50000 && y_axis > 250 && y_axis < 1400) direction = 3;		//down
 
 	xil_printf("direction: %d", direction);
+	printADCReading(XAXIS);
+	printADCReading(YAXIS);
+	printADCReading(POT);
+	printADCReading(BUTTON);
 
 	return direction;
 }

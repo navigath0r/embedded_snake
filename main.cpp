@@ -16,6 +16,7 @@ int main()
 	snake* sn;
 	food* fd;
 
+	int prev_dir = 2;
 	int dir = 2;
 	int button = 1;
 	int gamestate = 4;
@@ -32,7 +33,9 @@ int main()
 			case 1:
 			{
 
-				sn->moveSnake(dir,fd,lm,pg,score,gamestate);
+				sn->moveSnake(dir,prev_dir,fd,lm,pg,score,gamestate);
+				prev_dir = dir;
+
 				pg.setPlayground(sn,fd);
 				pg.outputFrameBuffer(lm);
 
@@ -43,8 +46,13 @@ int main()
 
 				if (fd->getSuperFood() == 1)
 				{
-					usleep(250000);
 					fd->TTL_superfood--;
+					if (fd->TTL_superfood == 0)
+					{
+						fd->generateFood(pg);
+					}
+
+					usleep(250000);					
 				}
 				else
 				{

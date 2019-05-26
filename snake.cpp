@@ -30,7 +30,7 @@ snake::~snake()
 	delete temp;
 }
 
-void snake::moveSnake(const int& dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate) //default direction: right
+void snake::moveSnake(int& dir, const int& prev_dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate) //default direction: right
 {
 
 	snake_element *new_head = new snake_element;
@@ -38,6 +38,12 @@ void snake::moveSnake(const int& dir, food* fd, led_matrix& lm, playground& pg, 
 	int next_col;
 
 	next_coord(dir, next_row, next_col);
+
+	if (head->next_element->row_pos == next_row && head->next_element->column_pos == next_col)
+	{
+		next_coord(prev_dir, next_row, next_col);
+		dir = prev_dir;
+	}
 
 	switch (collisonDetect(pg, next_row, next_col, score))
 	{
@@ -178,6 +184,7 @@ int snake::collisonDetect(playground& pg, int& next_row, int& next_col, int& sco
 
 void snake::next_coord(const int& dir, int& next_row, int& next_col)
 {
+
 	switch (dir)
 	{
 		case 0:

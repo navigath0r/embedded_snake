@@ -59,7 +59,7 @@ int food::generateFood(playground& pg)
 	if (foods_to_superfood == 0)
 	{
 		kaja.superfood = 1;
-		TTL_superfood = 18;
+		TTL_superfood = 12;
 		foods_to_superfood = rand() % 5 + 5;
 	}
 	else kaja.superfood = 0;
