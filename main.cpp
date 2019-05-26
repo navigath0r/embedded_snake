@@ -13,21 +13,26 @@ int main()
 	ADC adc;
 	led_matrix lm;
 	playground pg;
+	snake* sn;
+	food* fd;
 
-	int dir;
-	int gamestate = 0;
+	int dir = 2;
+	int button = 1;
+	int gamestate = 3;
 	int score = 0;
 
 
 	while(true)
 	{
 		adc.getPotDirection(dir);
+		adc.getButton(button);
 
 		switch (gamestate)
 		{
 			case 1:
 			{
-				sn.moveSnake(dir,fd,lm,pg,score,gamestate);
+
+				sn->moveSnake(dir,fd,lm,pg,score,gamestate);
 				pg.setPlayground(sn,fd);
 				pg.outputFrameBuffer(lm);
 
@@ -36,9 +41,10 @@ int main()
 					gamestate = 2;
 				}
 
-				if (fd.getSuperFood() == 1)
+				if (fd->getSuperFood() == 1)
 				{
 					usleep(250000);
+					fd->TTL_superfood--;
 				}
 				else
 				{
@@ -51,18 +57,23 @@ int main()
 			{
 				pg.die(sn,fd,lm,score);
 
-				if (adc.getButton() == 0)
+				delete sn;
+				delete fd;
+
+				if (button == 0)
 				{
 					gamestate = 3;
 				}
 				break;
 			}
+
 			case 3:
 			{
-				snake sn;
-				food fd(pg);
+				sn = new snake;
+				fd = new food(pg);
 
 				gamestate = 1;
+				break;
 			}
 		}
 

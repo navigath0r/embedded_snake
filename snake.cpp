@@ -16,11 +16,21 @@ snake::snake()
 
 snake::~snake()
 {
-	delete head;
+
+	temp = head;
+	temp_to_del = head;
+
+	while(temp->next_element->next_element != 0)
+		{
+			temp = temp->next_element;
+			delete temp_to_del;
+			temp_to_del = temp;
+		}
+
 	delete temp;
 }
 
-void snake::moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, int& points, int& gamestate) //default direction: right
+void snake::moveSnake(const int& dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate) //default direction: right
 {
 
 	snake_element *new_head = new snake_element;
@@ -29,7 +39,7 @@ void snake::moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, 
 
 	next_coord(dir, next_row, next_col);
 
-	switch (collisonDetect(pg, next_row, next_col, points))
+	switch (collisonDetect(pg, next_row, next_col, score))
 	{
 		case 1:
 		{
@@ -39,15 +49,16 @@ void snake::moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, 
 
 		case 3:
 		{
-			fd.generateFood(pg);
+			fd->foods_to_superfood--;
+			fd->generateFood(pg);
 			break;
 		}
 
 		case 4:
 		{
-			fd.generateFood(pg);
-			break;
-		}
+			fd->generateFood(pg);
+			break
+;		}
 
 		default:
 		break;
@@ -57,20 +68,24 @@ void snake::moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, 
 	new_head->column_pos = next_col;
 
 	new_head->next_element = head;
+	new_head->tail_flag = head->tail_flag;
 	head = new_head;
 
 	temp = head;
 
 	if(extend_flag == 0)
 	{
-
-		while(temp->next_element->next_element == 0)
+		while(temp->next_element->next_element != 0)
 		{
 			temp = temp->next_element;
+			temp->tail_flag = 0;
 		}
 
+
 		delete temp->next_element;
+		temp->next_element = 0;
 		temp->tail_flag = 1;
+		tail = temp;
 	}
 	else
 	{
@@ -129,7 +144,7 @@ int snake::decreaseRow()
 	return row;
 }
 
-int snake::collisonDetect(playground& pg, int& next_row, int& next_col, int& points)
+int snake::collisonDetect(playground& pg, int& next_row, int& next_col, int& score)
 {
 	
 			switch (pg[next_row][next_col])
@@ -142,14 +157,14 @@ int snake::collisonDetect(playground& pg, int& next_row, int& next_col, int& poi
 				case 3: //hit regular food
 				{
 					extend_flag = 1;
-					points++;
+					score++;
 					return 3;
 				}
 
 				case 4: //hit superfood
 				{
 					extend_flag = 1;
-					points += 3;
+					score += 3;
 					return 4;
 				}
 

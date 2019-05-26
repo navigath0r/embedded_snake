@@ -12,18 +12,18 @@ class food;
 class playground
 {
 public:
-	int playg[8][8];
+	int playg[8][8] = {};
 
 	playground();
 	~playground();
 
 	int* operator[](int x);
-	void setPlayground(snake& sn, food& feed);
+	void setPlayground(snake* sn, food* fd);
 	void outputFrameBuffer(led_matrix& lm);
 	void drawTens(int number[8][4]);
 	void drawOnes(int number[8][4]);
 	void displayScore(int& score, led_matrix& lm);
-	void die(snake& sn, food& fd, led_matrix lm, int& score);
+	void die(snake* sn, food* fd, led_matrix lm, int& score);
 
 };
 

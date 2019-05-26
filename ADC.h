@@ -83,7 +83,7 @@ class ADC
 
 		int getPotDirection(int& direction);
 
-		int getButton();
+		int getButton(int button);
 
 	//Private variables
 	private:

@@ -14,7 +14,7 @@ int* playground::operator[](int x){
     return playg[x];
 }
 
-void playground::setPlayground(snake& sn, food& feed)
+void playground::setPlayground(snake* sn, food* fd)
 {
 	for (int row = 0; row < 8; row++)
 	{
@@ -24,29 +24,30 @@ void playground::setPlayground(snake& sn, food& feed)
 		}
 	}
 
-	sn.temp = sn.head;
+	sn->temp = sn->head;
 
-	while (sn.temp->next_element == 0)
+	do
 	{
-		if (sn.temp->tail_flag == 1)
+		if (sn->temp->tail_flag == 1)
 		{
-			playg[sn.temp->row_pos][sn.temp->column_pos] = 2;
+			playg[sn->temp->row_pos][sn->temp->column_pos] = 2;
 		}
 		else
 		{
-			playg[sn.temp->row_pos][sn.temp->column_pos] = 1;
+			playg[sn->temp->row_pos][sn->temp->column_pos] = 1;
 		}
 
-		sn.temp = sn.temp->next_element;
+		sn->temp = sn->temp->next_element;
 	}
+	while (sn->temp->next_element != 0);
 
-	if (feed.getSuperFood() == 1)
+	if (fd->getSuperFood() == 1)
 	{
-		playg[feed.getFoodRow()][feed.getFoodColumn()] = 4;
+		playg[fd->getFoodRow()][fd->getFoodColumn()] = 4;
 	}
 	else
 	{
-		playg[feed.getFoodRow()][feed.getFoodColumn()] = 3;
+		playg[fd->getFoodRow()][fd->getFoodColumn()] = 3;
 	}
 }
 
@@ -58,6 +59,11 @@ void playground::outputFrameBuffer(led_matrix& lm)
 		{
 			switch (playg[row][col])
 			{
+				case 0:
+				{
+					lm.single_led(row,col,0,0,0);
+					break;
+				}
 				case 1:
 				{
 					lm.single_led(row,col,0,255,0);
@@ -97,7 +103,7 @@ void playground::outputFrameBuffer(led_matrix& lm)
 
 void playground::drawTens(int number[8][4])
 {
-	for (int row = 0; row < 4; row++)
+	for (int row = 0; row < 8; row++)
 	{
 		for (int col = 0; col < 4; col++)
 		{
@@ -109,7 +115,7 @@ void playground::drawTens(int number[8][4])
 
 void playground::drawOnes(int number[8][4])
 {
-	for (int row = 0; row < 4; row++)
+	for (int row = 0; row < 8; row++)
 	{
 		for (int col = 0; col < 4; col++)
 		{
@@ -258,13 +264,10 @@ void playground::displayScore(int& score, led_matrix& lm)
 	outputFrameBuffer(lm);
 }
 
-void playground::die(snake& sn, food& fd, led_matrix lm, int& score)
+void playground::die(snake* sn, food* fd, led_matrix lm, int& score)
 {
 	displayScore(score,lm);
 
 	score = 0;
-
-	sn.~snake();
-	fd.~food();
 
 }

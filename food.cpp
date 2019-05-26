@@ -43,11 +43,18 @@ int food::generateFood(playground& pg)
 {
 	kaja.row = rand() % 8;
 	kaja.column = rand() % 8;
+	kaja.superfood = 0;
 
 	if (pg[kaja.row][kaja.column] == 1 || pg[kaja.row][kaja.column] == 2)
 	{
 		food::generateFood(pg);
 	}
+	else
+	{
+		pg[kaja.row][kaja.column] = kaja.superfood + 1;
+	}
+
+
 
 	if (foods_to_superfood == 0)
 	{
@@ -55,6 +62,7 @@ int food::generateFood(playground& pg)
 		TTL_superfood = 18;
 		foods_to_superfood = rand() % 5 + 5;
 	}
+	else kaja.superfood = 0;
 
 	return kaja.superfood;
 }

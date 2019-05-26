@@ -27,19 +27,20 @@ public:
 	snake_element *head;
 	snake_element *tail;
 	snake_element *temp;
+	snake_element *temp_to_del;
 
-	int extend_flag;
+	int extend_flag = 0;
 
 	snake();
 	virtual ~snake();
 
-	void moveSnake(const int& dir, food& fd, led_matrix& lm, playground& pg, int& points, int& gamestate);
+	void moveSnake(const int& dir, food* fd, led_matrix& lm, playground& pg, int& score, int& gamestate);
 	int increaseCol();
 	int decreaseCol();
 	int increaseRow();
 	int decreaseRow();
 	void next_coord(const int& dir, int& next_row, int& next_col);
-	int collisonDetect(playground& pg, int& next_row, int& next_col, int& points);
+	int collisonDetect(playground& pg, int& next_row, int& next_col, int& score);
 
 };
 #endif /* SRC_SNAKE_H_ */

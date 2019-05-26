@@ -18,7 +18,7 @@ public:
 
 	food_elem kaja;
 	int TTL_superfood;
-	int foods_to_superfood;
+	int foods_to_superfood = 1;
 
 	food(playground& pg);
 	virtual ~food();
