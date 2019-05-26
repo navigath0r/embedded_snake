@@ -107,7 +107,7 @@ void playground::drawTens(int number[8][4])
 	{
 		for (int col = 0; col < 4; col++)
 		{
-			playg[row][col] = number[row][col];
+			playg[8-row][col] = number[row][col];
 		}
 	}
 }
@@ -119,7 +119,7 @@ void playground::drawOnes(int number[8][4])
 	{
 		for (int col = 0; col < 4; col++)
 		{
-			playg[row][col + 4] = number[row][col];
+			playg[8-row][col + 4] = number[row][col];
 		}
 	}
 }
