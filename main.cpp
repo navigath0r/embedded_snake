@@ -18,7 +18,7 @@ int main()
 
 	int dir = 2;
 	int button = 1;
-	int gamestate = 3;
+	int gamestate = 4;
 	int score = 0;
 
 
@@ -59,21 +59,24 @@ int main()
 
 				delete sn;
 				delete fd;
-
+				gamestate = 3;
+				break;
+			}
+			case 3:
+			{
 				if (button == 0)
 				{
-					gamestate = 3;
+					gamestate = 4;
 				}
 				break;
 			}
 
-			case 3:
+			case 4:
 			{
 				sn = new snake;
 				fd = new food(pg);
 
 				gamestate = 1;
-				break;
 			}
 		}
 

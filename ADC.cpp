@@ -65,7 +65,7 @@ int ADC::getPotDirection(int& direction)
 	return direction;
 }
 
-int ADC::getButton(int button)
+int ADC::getButton(int& button)
 {
 	button = readADC(BUTTON);
 
